@@ -83,7 +83,8 @@ public class FamousPerson extends Human implements Presenters {
                 dog.setOwner(receiver);
                 Shelter.getInstance().removeDog(dog);
 
-                System.out.println(dog.getName() + " перешла от попечителя " + giver.getName() + " к хозяину " + receiver.getName());
+                System.out.println(dog.getName() + " перешла от попечителя " + giver.getName() +
+                        " к хозяину " + receiver.getName());
             }
         }
 

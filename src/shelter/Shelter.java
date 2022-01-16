@@ -54,7 +54,6 @@ public final class Shelter {
 
 
     public String removeDog(Dog d) {
-
         try {
             dogList.remove(d);
             return "Собака " + d.getName() + " отправляется домой к своим новым хозяевам!";
