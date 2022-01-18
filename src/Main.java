@@ -9,15 +9,6 @@ import dog.*;
 
 public class Main {
     public static Shelter SHELTER = Shelter.getInstance();
-    /*
-    ArrayList используется для удобства, по принципу работы похож на обычный массив: в угловых скобочках
-    необходимо указать класс, объекты которого будут лежать в списке.
-
-    - get(int idx) - получить элемент списка по индексу
-    - add(Object obj) - добавить элемент в список
-    - remove(Object obj / int idx) - удалить элемент из списка ИЛИ удалить элемент списка по индексу
-    - size() - узнать длину списка
-     */
 
     public static ArrayList<FamousPerson> famousPersonList = new ArrayList<FamousPerson>();
     public static ArrayList<Person> personList = new ArrayList<Person>();
@@ -26,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         createDogs();
-        ArrayList<Dog> dogs = SHELTER.getDogList();
+        Dog[] dogs = SHELTER.getDogList();
 
         print("В приюте 'Домашний' живут:");
         for (Dog dog : SHELTER.getDogList()) {
@@ -46,7 +37,7 @@ public class Main {
 
         // Каждая известная личность выбирает себе собаку
         for (int i = 0; i < famousPersonList.size(); i++) {
-            famousPersonList.get(i).chooseDog(dogs.get(i));
+            famousPersonList.get(i).chooseDog(dogs[i]);
         }
 
         print("\nТакже необходимо позаботиться о собаках:");
@@ -82,7 +73,7 @@ public class Main {
 
         for (int i = 0; i < personList.size(); i++) {
             try {
-                Dog dog = dogs.get(i);
+                Dog dog = dogs[i];
                 Person person = personList.get(i);
                 if (SHELTER.applyForDog(dog, person)) {
                     person.chooseDog(dog);
@@ -92,8 +83,8 @@ public class Main {
             }
         }
 
-        if (SHELTER.getDogList().size() > 0) {
-            print("\nК сожалению, в приюте осталось " + SHELTER.getDogList().size() + "собак.");
+        if (SHELTER.getDogList().length > 0) {
+            print("\nК сожалению, в приюте осталось " + SHELTER.getDogList().length + " собак.");
         } else {
             print("\nВсе собаки нашли хозяев!\nНовые хозяева сразу угостили питомцев вкусной едой:");
             for (Person p : personList) {

@@ -3,11 +3,9 @@ package shelter;
 import dog.Dog;
 import human.Person;
 
-import java.util.ArrayList;
-
 public final class Shelter {
     private final String name = "Домашний";
-    private ArrayList<Dog> dogList = new ArrayList<Dog>();
+    private Dog[] dogList = new Dog[1];
 
 
     // Реализация синглтона
@@ -37,27 +35,39 @@ public final class Shelter {
         return c;
     }
 
-    public ArrayList<Dog> getDogList() {
-        return (ArrayList<Dog>) dogList.clone();
+    public Dog[] getDogList() {
+        return dogList.clone();
     }
 
-    public void addDog(Dog d) {
+    public void addDog(Dog dog) {
+        // Если место в массиве собак закончилось, создаётся новый массив с длиной = длинаТекущегоМассива + 1
+        if(dogList[dogList.length - 1] != null){
+            addPlaceForDog();
+        }
+        for(int i = 0; i < dogList.length; i++){
+            if(dogList[i] == null){
+                dogList[i] = dog;
+            }
+        };
+    }
 
-        dogList.add(d);
+    public void addPlaceForDog(){
+        Dog[] tmpArr = getDogList();
+        dogList = new Dog[tmpArr.length + 1];
+        System.arraycopy(tmpArr, 0, dogList, 0, tmpArr.length);
     }
 
     public boolean applyForDog(Dog dog, Person person) {
-        // Если доход в три раза больше содержания собаки И у собаки ещё нет хозяина И человеку >= 18 лет
+        // Если доход в три раза больше содержания собаки И человеку >= 18 лет
         return (person.getSalary() / 3 > dog.getMonthlyCost()) && (person.getAge() >= 18);
     }
 
 
-    public String removeDog(Dog d) {
-        try {
-            dogList.remove(d);
-            return "Собака " + d.getName() + " отправляется домой к своим новым хозяевам!";
-        } catch (Exception e) {
-            return "А такой собаки в приюте нет!";
+    public void removeDog(Dog dog) {
+        for(int i = 0; i < dogList.length; i++){
+            if(dogList[i] != null && dogList[i].equals(dog)){
+                dogList[i] = null;
+            }
         }
     }
 
