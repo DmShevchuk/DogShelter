@@ -67,10 +67,10 @@ public class Main {
         // Пробегаем по всем социальным сетям и по каждому посту в них, чтобы поставить лайки
         print("\nОбщество активно пользуется соцсетями!");
         for (SocialNetwork SN : SNList) {
-            ArrayList<SocialNetwork.Post> postList = SN.getPostStorage();
+            SocialNetwork.Post[] postList = SN.getPostStorage();
 
             for (int i = 0; i < personList.size(); i++) {
-                personList.get(i).likePost(postList.get(i % postList.size()));
+                personList.get(i).likePost(postList[i % postList.length]);
             }
 
             for (SocialNetwork.Post post : postList) {

@@ -1,13 +1,11 @@
 package network;
 
 import human.FamousProfessions;
-
-import java.util.ArrayList;
 import java.util.Formatter;
 
 public class SocialNetwork {
     private final String name;
-    private ArrayList<Post> postStorage = new ArrayList<>();
+    private Post[] postStorage = new Post[1];
 
     public SocialNetwork(String name) {
         this.name = name;
@@ -17,13 +15,29 @@ public class SocialNetwork {
         return name;
     }
 
-    public ArrayList<Post> getPostStorage() {
-        return (ArrayList<Post>) postStorage.clone();
+    public Post[] getPostStorage() {
+        return  postStorage.clone();
     }
 
     public void addPost(Post post) {
-        postStorage.add(post);
+        // Если в массиве нет места, то создаётся новый с длиной = длинаТекущегоМассива + 1
+        if(postStorage[postStorage.length - 1] != null){
+            increasePostStorage();
+        }
+
+        for(int i = 0; i < postStorage.length; i++){
+            if(postStorage[i] == null){
+                postStorage[i] = post;
+            }
+        }
+
         Publisher.publish(name, post);
+    }
+
+    public void increasePostStorage(){
+        Post[] tmpStorage = getPostStorage();
+        postStorage = new Post[tmpStorage.length + 1];
+        System.arraycopy(tmpStorage, 0, postStorage, 0, tmpStorage.length);
     }
 
     public class Post {
