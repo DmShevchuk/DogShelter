@@ -5,10 +5,9 @@ import dog.Dog;
 import network.*;
 import shelter.Shelter;
 
-import java.util.Formatter;
 
 public class FamousPerson extends Human implements Presenters {
-    private FamousProfessions PROFESSION;
+    private final FamousProfessions PROFESSION;
     private Dog dog;
 
     public FamousPerson(String name, int age, FamousProfessions p) {

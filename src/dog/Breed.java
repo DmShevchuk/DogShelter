@@ -18,6 +18,4 @@ public enum Breed {
     public String toString(){
         return breedRu;
     }
-
-
 }

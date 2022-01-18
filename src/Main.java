@@ -24,7 +24,7 @@ public class Main {
     public static ArrayList<SocialNetwork> SNList = new ArrayList<SocialNetwork>();
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         createDogs();
         ArrayList<Dog> dogs = SHELTER.getDogList();
 

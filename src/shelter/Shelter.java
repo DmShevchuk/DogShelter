@@ -48,8 +48,7 @@ public final class Shelter {
 
     public boolean applyForDog(Dog dog, Person person) {
         // Если доход в три раза больше содержания собаки И у собаки ещё нет хозяина И человеку >= 18 лет
-        return (person.getSalary() / 3 > dog.getMonthlyCost()) && (dog.getOwner().getClass() != Person.class) &&
-                (person.getAge() >= 18);
+        return (person.getSalary() / 3 > dog.getMonthlyCost()) && (person.getAge() >= 18);
     }
 
 
