@@ -10,9 +10,9 @@ import dog.*;
 public class Main {
     public static Shelter SHELTER = Shelter.getInstance();
 
-    public static ArrayList<FamousPerson> famousPersonList = new ArrayList<FamousPerson>();
-    public static ArrayList<Person> personList = new ArrayList<Person>();
-    public static ArrayList<SocialNetwork> SNList = new ArrayList<SocialNetwork>();
+    public static FamousPerson[] famousPersonList = new FamousPerson[6];
+    public static Person[] personList = new Person[6];
+    public static SocialNetwork[] SNList = new SocialNetwork[3];
 
 
     public static void main(String[] args) {
@@ -36,8 +36,8 @@ public class Main {
         }
 
         // Каждая известная личность выбирает себе собаку
-        for (int i = 0; i < famousPersonList.size(); i++) {
-            famousPersonList.get(i).chooseDog(dogs[i]);
+        for (int i = 0; i < famousPersonList.length; i++) {
+            famousPersonList[i].chooseDog(dogs[i]);
         }
 
         print("\nТакже необходимо позаботиться о собаках:");
@@ -50,9 +50,9 @@ public class Main {
         createSocialNetworks();
         print("");
 
-        for (int i = 0; i < famousPersonList.size(); i++) {
+        for (int i = 0; i < famousPersonList.length; i++) {
             // Метод SocialNetwork.Publisher.publish выводит результат работы следующей строки в консоль!
-            famousPersonList.get(i).createPost(SNList.get(i % 3));
+            famousPersonList[i].createPost(SNList[i % 3]);
         }
 
         // Пробегаем по всем социальным сетям и по каждому посту в них, чтобы поставить лайки
@@ -60,8 +60,8 @@ public class Main {
         for (SocialNetwork SN : SNList) {
             SocialNetwork.Post[] postList = SN.getPostStorage();
 
-            for (int i = 0; i < personList.size(); i++) {
-                personList.get(i).likePost(postList[i % postList.length]);
+            for (int i = 0; i < personList.length; i++) {
+                personList[i].likePost(postList[i % postList.length]);
             }
 
             for (SocialNetwork.Post post : postList) {
@@ -71,10 +71,10 @@ public class Main {
 
         print("");
 
-        for (int i = 0; i < personList.size(); i++) {
+        for (int i = 0; i < personList.length; i++) {
             try {
                 Dog dog = dogs[i];
-                Person person = personList.get(i);
+                Person person = personList[i];
                 if (SHELTER.applyForDog(dog, person)) {
                     person.chooseDog(dog);
                 }
@@ -83,12 +83,21 @@ public class Main {
             }
         }
 
-        if (SHELTER.getDogList().length > 0) {
-            print("\nК сожалению, в приюте осталось " + SHELTER.getDogList().length + " собак.");
+
+        // Необходимо посчитать, сколько собак осталось в приюте
+        int count = 0;
+        for (int i = 0; i < SHELTER.getDogList().length; i++) {
+            if (SHELTER.getDogList()[i] != null) {
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            print("\nК сожалению, в приюте осталось " + count + " собак.");
         } else {
             print("\nВсе собаки нашли хозяев!\nНовые хозяева сразу угостили питомцев вкусной едой:");
             for (Person p : personList) {
-                print((String) p.feedDog());
+                print(p.feedDog());
             }
         }
 
@@ -105,33 +114,33 @@ public class Main {
     }
 
     public static void createFamousPeople() {
-        famousPersonList.add(new FamousPerson("Владимир Ленин", 50, FamousProfessions.POLITICIAN));
-        famousPersonList.add(new FamousPerson("Юрий Дудь", 35, FamousProfessions.JOURNALIST));
-        famousPersonList.add(new FamousPerson("Алексей Шевцов", 36, FamousProfessions.BLOGGER));
-        famousPersonList.add(new FamousPerson("Павел Дуров", 37, FamousProfessions.BUSINESSMAN));
-        famousPersonList.add(new FamousPerson("Том Харди", 44, FamousProfessions.ACTOR));
-        famousPersonList.add(new FamousPerson("Алишер Моргенштерн", 30, FamousProfessions.MUSICIAN));
+        famousPersonList[0] = new FamousPerson("Владимир Ленин", 50, FamousProfessions.POLITICIAN);
+        famousPersonList[1] = new FamousPerson("Юрий Дудь", 35, FamousProfessions.JOURNALIST);
+        famousPersonList[2] = new FamousPerson("Алексей Шевцов", 36, FamousProfessions.BLOGGER);
+        famousPersonList[3] = new FamousPerson("Павел Дуров", 37, FamousProfessions.BUSINESSMAN);
+        famousPersonList[4] = new FamousPerson("Том Харди", 44, FamousProfessions.ACTOR);
+        famousPersonList[5] = new FamousPerson("Алишер Моргенштерн", 30, FamousProfessions.MUSICIAN);
     }
 
     public static void createPeople() {
-        personList.add(new Person("Сергей Петров", 25, 50000));
-        personList.add(new Person("Анна Кожемякина", 35, 35000));
-        personList.add(new Person("Варвара Сверчкова", 19, 40000));
-        personList.add(new Person("Владислав Ежиков", 24, 70000));
-        personList.add(new Person("Александ Лосин", 23, 80000));
+        personList[0] = new Person("Сергей Петров", 25, 50000);
+        personList[1] = new Person("Анна Кожемякина", 35, 35000);
+        personList[2] = new Person("Варвара Сверчкова", 19, 40000);
+        personList[3] = new Person("Владислав Ежиков", 24, 70000);
+        personList[4] = new Person("Александ Лосин", 23, 80000);
 
         // Попытка создать человека без указания его месячного дохода
         try {
-            personList.add(new Person("Святослав Рогов", 20));
+            personList[5] = new Person("Святослав Рогов", 20);
         } catch (SalaryNotSpecifiedException e) {
-            personList.add(new Person("Святослав Рогов", 20, 65000));
+            personList[5] = new Person("Святослав Рогов", 20, 65000);
         }
     }
 
     public static void createSocialNetworks() {
-        SNList.add(new SocialNetwork("Instagram"));
-        SNList.add(new SocialNetwork("VK"));
-        SNList.add(new SocialNetwork("Facebook"));
+        SNList[0] = new SocialNetwork("Instagram");
+        SNList[1] = new SocialNetwork("VK");
+        SNList[2] = new SocialNetwork("Facebook");
     }
 
 
