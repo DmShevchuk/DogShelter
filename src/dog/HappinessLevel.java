@@ -1,36 +1,17 @@
 package dog;
 
 public enum HappinessLevel {
-    UPSET {
-        @Override
-        public String describe() {
-            return "собака очень расстроена.";
-        }
-    },
-    DISAPPOINTED {
-        @Override
-        public String describe() {
-            return "собака разочарована.";
-        }
-    },
-    NEUTRAL {
-        @Override
-        public String describe() {
-            return "собаке всё безразлично.";
-        }
-    },
-    PLAYFUL {
-        @Override
-        public String describe() {
-            return "у собаки игривое настроение.";
-        }
-    },
-    HAPPY {
-        @Override
-        public String describe() {
-            return "собака очень счастлива.";
-        }
-    };
+    UPSET("собака очень расстроена."),
+    DISAPPOINTED("собака разочарована."),
+    NEUTRAL("собаке всё безразлично."),
+    PLAYFUL("у собаки игривое настроение."),
+    HAPPY("собака очень счастлива.");
+
+    private final String describing;
+
+    HappinessLevel(String d){
+        describing = d;
+    }
 
     public HappinessLevel next() {
         switch (this) {
@@ -47,5 +28,7 @@ public enum HappinessLevel {
         return HAPPY;
     }
 
-    abstract String describe();
+    public String describe(){
+        return describing;
+    };
 }
